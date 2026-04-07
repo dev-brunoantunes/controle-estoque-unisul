@@ -2,6 +2,7 @@
 
 Sistema de controle de estoque desenvolvido em Java com MySQL, incluindo CRUD de produtos, categorias, movimentações e relatórios.
 
-integrantes:
-Kauã Sousa Paulo, RA: 10726111167, github: okauasp
-Bruno da Silva Antunes, RA: 1072610215, github: dev-brunoantunes
+Integrantes:
+
+- Kauã Sousa Paulo, RA: 10726111167, github: okauasp
+- Bruno da Silva Antunes, RA: 1072610215, github: dev-brunoantunes
