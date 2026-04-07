@@ -6,3 +6,4 @@ Integrantes:
 
 - Kauã Sousa Paulo, RA: 10726111167, github: okauasp
 - Bruno da Silva Antunes, RA: 1072610215, github: dev-brunoantunes
+- Luigi  Tadeu Tricarico, RA:10726112026, git hub: LuigiTadeuTricarico
