@@ -1,7 +1,7 @@
 package model;
 
 import interfaces.Reajustavel;
-
+// Sistema de controle de estoque
 public class Produto extends Entidade implements Reajustavel {
 
     private String nome;
