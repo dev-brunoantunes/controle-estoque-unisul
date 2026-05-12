@@ -1,3 +1,4 @@
+
 package model;
 
 public class Categoria extends Entidade {
@@ -31,6 +32,16 @@ public class Categoria extends Entidade {
 
     public void setEmbalagem(String embalagem) {
         this.embalagem = embalagem;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Categoria{" +
+                "id=" + getId() +
+                ", nome='" + nome + '\'' +
+                '}';
+
     }
 
 }

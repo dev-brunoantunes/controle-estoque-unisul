@@ -1,13 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
-/**
- *
- * @author sdews
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Movimentacao;
+
 public class MovimentacaoDAO {
-    
+
+    private List<Movimentacao> movimentacoes =
+            new ArrayList<>();
+
+    // Inserir
+    public void inserir(Movimentacao movimentacao) {
+
+        movimentacoes.add(movimentacao);
+
+    }
+
+    // Listar
+    public List<Movimentacao> listar() {
+
+        return movimentacoes;
+
+    }
+
 }

@@ -17,9 +17,11 @@ public class Produto extends Entidade implements Reajustavel {
     public Produto() {
     }
 
-    public Produto(int id, String nome, double preco, String unidade,
-                   int quantidade, int quantidadeMinima,
-                   int quantidadeMaxima, Categoria categoria) {
+    public Produto(int id, String nome, double preco,
+                   String unidade, int quantidade,
+                   int quantidadeMinima,
+                   int quantidadeMaxima,
+                   Categoria categoria) {
 
         super(id);
 
@@ -95,33 +97,36 @@ public class Produto extends Entidade implements Reajustavel {
 
     }
 
-    // Entrada no estoque
+    // Entrada de estoque
     public void entradaEstoque(int quantidadeEntrada) {
 
         quantidade += quantidadeEntrada;
 
     }
 
-    // Saída do estoque
+    // Saída de estoque
     public boolean saidaEstoque(int quantidadeSaida) {
 
         if (quantidadeSaida > quantidade) {
+
             return false;
+
         }
 
         quantidade -= quantidadeSaida;
 
         return true;
+
     }
 
-    // Verifica se está abaixo do mínimo
+    // Verifica estoque mínimo
     public boolean abaixoMinimo() {
 
         return quantidade < quantidadeMinima;
 
     }
 
-    // Verifica se ultrapassou o máximo
+    // Verifica estoque máximo
     public boolean acimaMaximo() {
 
         return quantidade > quantidadeMaxima;
@@ -140,4 +145,5 @@ public class Produto extends Entidade implements Reajustavel {
                 '}';
 
     }
+
 }

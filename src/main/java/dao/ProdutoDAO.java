@@ -26,12 +26,15 @@ public class ProdutoDAO {
         for (Produto produto : produtos) {
 
             if (produto.getId() == id) {
+
                 return produto;
+
             }
 
         }
 
         return null;
+
     }
 
     public void remover(int id) {
