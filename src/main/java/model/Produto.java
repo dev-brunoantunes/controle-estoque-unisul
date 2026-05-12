@@ -1,7 +1,7 @@
 package model;
 
 import interfaces.Reajustavel;
-// Sistema de controle de estoque
+
 public class Produto extends Entidade implements Reajustavel {
 
     private String nome;
@@ -15,6 +15,21 @@ public class Produto extends Entidade implements Reajustavel {
     private Categoria categoria;
 
     public Produto() {
+    }
+
+    public Produto(int id, String nome, double preco, String unidade,
+                   int quantidade, int quantidadeMinima,
+                   int quantidadeMaxima, Categoria categoria) {
+
+        super(id);
+
+        this.nome = nome;
+        this.preco = preco;
+        this.unidade = unidade;
+        this.quantidade = quantidade;
+        this.quantidadeMinima = quantidadeMinima;
+        this.quantidadeMaxima = quantidadeMaxima;
+        this.categoria = categoria;
     }
 
     public String getNome() {
@@ -80,4 +95,49 @@ public class Produto extends Entidade implements Reajustavel {
 
     }
 
+    // Entrada no estoque
+    public void entradaEstoque(int quantidadeEntrada) {
+
+        quantidade += quantidadeEntrada;
+
+    }
+
+    // Saída do estoque
+    public boolean saidaEstoque(int quantidadeSaida) {
+
+        if (quantidadeSaida > quantidade) {
+            return false;
+        }
+
+        quantidade -= quantidadeSaida;
+
+        return true;
+    }
+
+    // Verifica se está abaixo do mínimo
+    public boolean abaixoMinimo() {
+
+        return quantidade < quantidadeMinima;
+
+    }
+
+    // Verifica se ultrapassou o máximo
+    public boolean acimaMaximo() {
+
+        return quantidade > quantidadeMaxima;
+
+    }
+
+    @Override
+    public String toString() {
+
+        return "Produto{" +
+                "id=" + getId() +
+                ", nome='" + nome + '\'' +
+                ", preco=" + preco +
+                ", quantidade=" + quantidade +
+                ", categoria=" + categoria.getNome() +
+                '}';
+
+    }
 }

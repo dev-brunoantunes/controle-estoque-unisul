@@ -7,9 +7,20 @@ public class Movimentacao extends Entidade {
     private Produto produto;
     private LocalDate data;
     private int quantidade;
-    private String tipo;
+    private TipoMovimentacao tipo;
 
     public Movimentacao() {
+    }
+
+    public Movimentacao(int id, Produto produto, LocalDate data,
+                        int quantidade, TipoMovimentacao tipo) {
+
+        super(id);
+
+        this.produto = produto;
+        this.data = data;
+        this.quantidade = quantidade;
+        this.tipo = tipo;
     }
 
     public Produto getProduto() {
@@ -36,12 +47,23 @@ public class Movimentacao extends Entidade {
         this.quantidade = quantidade;
     }
 
-    public String getTipo() {
+    public TipoMovimentacao getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoMovimentacao tipo) {
         this.tipo = tipo;
     }
 
+    @Override
+    public String toString() {
+
+        return "Movimentacao{" +
+                "produto=" + produto.getNome() +
+                ", data=" + data +
+                ", quantidade=" + quantidade +
+                ", tipo=" + tipo +
+                '}';
+
+    }
 }
