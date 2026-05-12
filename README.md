@@ -167,7 +167,7 @@ Relatório contendo:
 
 # Tecnologias Utilizadas
 
-- Java
+- Java ( JDK 25.0 )
 - Programação Orientada a Objetos (POO)
 - Git
 - GitHub
