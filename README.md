@@ -186,3 +186,12 @@ Relatório contendo:
 # Observação
 
 Este projeto está sendo desenvolvido ao longo do semestre, podendo receber atualizações e correções conforme as orientações do professor.
+
+
+# Observação banco
+
+1. Execute o arquivo banco/controle_estoque.sql no MySQL Workbench
+
+2. Verifique usuário e senha na classe util.Conexao
+
+3. Execute o projeto Maven no NetBeans
