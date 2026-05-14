@@ -187,6 +187,7 @@ Relatório contendo:
 
 Este projeto está sendo desenvolvido ao longo do semestre, podendo receber atualizações e correções conforme as orientações do professor.
 
+---
 
 # Observação banco
 
