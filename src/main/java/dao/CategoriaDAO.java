@@ -1,51 +1,127 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Categoria;
+import util.Conexao;
 
 public class CategoriaDAO {
 
-    private List<Categoria> categorias = new ArrayList<>();
-
     public void inserir(Categoria categoria) {
 
-        categorias.add(categoria);
+        String sql = "INSERT INTO categoria (nome, tamanho, embalagem) VALUES (?, ?, ?)";
 
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, categoria.getNome());
+            ps.setString(2, categoria.getTamanho());
+            ps.setString(3, categoria.getEmbalagem());
+
+            ps.executeUpdate();
+
+            System.out.println("Categoria inserida!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Categoria> listar() {
 
-        return categorias;
+        List<Categoria> lista = new ArrayList<>();
 
+        String sql = "SELECT id, nome, tamanho, embalagem FROM categoria";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+
+                Categoria categoria = new Categoria();
+                categoria.setId(rs.getInt("id"));
+                categoria.setNome(rs.getString("nome"));
+                categoria.setTamanho(rs.getString("tamanho"));
+                categoria.setEmbalagem(rs.getString("embalagem"));
+
+                lista.add(categoria);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 
     public Categoria buscarPorId(int id) {
 
-        for (Categoria categoria : categorias) {
+        String sql = "SELECT id, nome, tamanho, embalagem FROM categoria WHERE id = ?";
 
-            if (categoria.getId() == id) {
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                return categoria;
+            ps.setInt(1, id);
 
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+                    Categoria categoria = new Categoria();
+                    categoria.setId(rs.getInt("id"));
+                    categoria.setNome(rs.getString("nome"));
+                    categoria.setTamanho(rs.getString("tamanho"));
+                    categoria.setEmbalagem(rs.getString("embalagem"));
+                    return categoria;
+                }
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return null;
     }
 
-    public void remover(int id) {
+    public void atualizar(Categoria categoria) {
 
-        Categoria categoria = buscarPorId(id);
+        String sql = "UPDATE categoria SET nome = ?, tamanho = ?, embalagem = ? WHERE id = ?";
 
-        if (categoria != null) {
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            categorias.remove(categoria);
+            ps.setString(1, categoria.getNome());
+            ps.setString(2, categoria.getTamanho());
+            ps.setString(3, categoria.getEmbalagem());
+            ps.setInt(4, categoria.getId());
 
+            ps.executeUpdate();
+
+            System.out.println("Categoria atualizada!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
+    public void remover(int id) {
+
+        String sql = "DELETE FROM categoria WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+            System.out.println("Categoria removida!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

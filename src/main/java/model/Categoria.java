@@ -1,4 +1,3 @@
-
 package model;
 
 public class Categoria extends Entidade {
@@ -37,11 +36,7 @@ public class Categoria extends Entidade {
     @Override
     public String toString() {
 
-        return "Categoria{" +
-                "id=" + getId() +
-                ", nome='" + nome + '\'' +
-                '}';
+        return nome;
 
     }
-
 }

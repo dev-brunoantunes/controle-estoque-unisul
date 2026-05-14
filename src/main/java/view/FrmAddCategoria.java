@@ -4,12 +4,12 @@
  */
 package view;
 
-/**
- *
- * @author Kauã
- */
+import dao.CategoriaDAO;
+import javax.swing.JOptionPane;
+import model.Categoria;
+
 public class FrmAddCategoria extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmAddCategoria.class.getName());
 
     /**
@@ -178,7 +178,7 @@ public class FrmAddCategoria extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-         FrmAltProduto object = new FrmAltProduto();
+        FrmAltProduto object = new FrmAltProduto();
         object.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -187,7 +187,24 @@ public class FrmAddCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_embcatActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (nomectg.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o nome da categoria!");
+            return;
+        }
+
+        Categoria categoria = new Categoria();
+        categoria.setNome(nomectg.getText().trim());
+        categoria.setTamanho(tmnctg.getText().trim());
+        categoria.setEmbalagem(embcat.getText().trim());
+
+        CategoriaDAO dao = new CategoriaDAO();
+        dao.inserir(categoria);
+
+        JOptionPane.showMessageDialog(this, "Categoria cadastrada com sucesso!");
+
+        nomectg.setText("");
+        tmnctg.setText("");
+        embcat.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -4,19 +4,35 @@
  */
 package view;
 
+import dao.ProdutoDAO;
+import javax.swing.JOptionPane;
+import model.Categoria;
+import model.Produto;
+import dao.CategoriaDAO;
+import java.util.List;
+
 /**
  *
  * @author sdews
  */
 public class FrmAddProduto extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmAddProduto.class.getName());
 
-    /**
-     * Creates new form FrmAddProduto
-     */
+    private List<Categoria> categorias;
+
     public FrmAddProduto() {
         initComponents();
+        carregarCategorias(); // linha adicionada
+    }
+
+    private void carregarCategorias() {
+        CategoriaDAO dao = new CategoriaDAO();
+        categorias = dao.listar();
+        jCategoriaSelect.removeAllItems();
+        for (Categoria cat : categorias) {
+            jCategoriaSelect.addItem(cat.getNome());
+        }
     }
 
     /**
@@ -42,7 +58,7 @@ public class FrmAddProduto extends javax.swing.JFrame {
         estoqueprd = new javax.swing.JTextField();
         maxprd = new javax.swing.JTextField();
         minprd = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jCategoriaSelect = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -91,8 +107,8 @@ public class FrmAddProduto extends javax.swing.JFrame {
 
         minprd.addActionListener(this::minprdActionPerformed);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "none", "pao" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        jCategoriaSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "none", "pao" }));
+        jCategoriaSelect.addActionListener(this::jCategoriaSelectActionPerformed);
 
         jButton1.setText("Adicionar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
@@ -147,7 +163,7 @@ public class FrmAddProduto extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(nomeprd, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCategoriaSelect, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(undprd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,16 +196,14 @@ public class FrmAddProduto extends javax.swing.JFrame {
                 .addComponent(undprd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(precoprd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(precoprd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(22, 22, 22)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCategoriaSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,12 +253,51 @@ public class FrmAddProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_minprdActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jCategoriaSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCategoriaSelectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jCategoriaSelectActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (nomeprd.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o nome do produto!");
+            return;
+        }
+
+        if (categorias == null || categorias.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cadastre uma categoria antes de adicionar um produto!");
+            return;
+        }
+
+        try {
+            Produto produto = new Produto();
+
+            produto.setNome(nomeprd.getText().trim());
+            produto.setPreco(Double.parseDouble(precoprd.getText().trim()));
+            produto.setUnidade(undprd.getText().trim());
+            produto.setQuantidade(Integer.parseInt(estoqueprd.getText().trim()));
+            produto.setQuantidadeMinima(Integer.parseInt(minprd.getText().trim()));
+            produto.setQuantidadeMaxima(Integer.parseInt(maxprd.getText().trim()));
+
+            Categoria categoria = categorias.get(jCategoriaSelect.getSelectedIndex());
+            produto.setCategoria(categoria);
+
+            ProdutoDAO dao = new ProdutoDAO();
+            dao.cadastrar(produto);
+
+            JOptionPane.showMessageDialog(null, "Produto cadastrado!");
+
+            nomeprd.setText("");
+            precoprd.setText("");
+            undprd.setText("");
+            estoqueprd.setText("");
+            minprd.setText("");
+            maxprd.setText("");
+            jCategoriaSelect.setSelectedIndex(0);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Verifique os campos numéricos (Preço, Quantidade, Mínimo, Máximo).");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -254,18 +307,18 @@ public class FrmAddProduto extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-         FrmAddCategoria object = new FrmAddCategoria();
-        object.setVisible (true);
+        FrmAddCategoria object = new FrmAddCategoria();
+        object.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-         FrmAltProduto object = new FrmAltProduto();
+        FrmAltProduto object = new FrmAltProduto();
         object.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
@@ -297,7 +350,7 @@ public class FrmAddProduto extends javax.swing.JFrame {
     private javax.swing.JTextField estoqueprd;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jCategoriaSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
