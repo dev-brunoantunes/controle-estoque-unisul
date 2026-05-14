@@ -28,6 +28,7 @@ public class FrmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuMovimentacao = new javax.swing.JMenu();
         jMenuOpcoes = new javax.swing.JMenu();
@@ -37,6 +38,8 @@ public class FrmMain extends javax.swing.JFrame {
         jMenuItemProduto = new javax.swing.JMenu();
         jMenuItemProdutoAdd = new javax.swing.JMenuItem();
         jMenuItemProdutoAlterar = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle de estoque");
@@ -49,9 +52,11 @@ public class FrmMain extends javax.swing.JFrame {
         jMenuItemCategoria.setText("Categoria");
 
         jMenuItemCategoriaAdd.setText("Adicionar");
+        jMenuItemCategoriaAdd.addActionListener(this::jMenuItemCategoriaAddActionPerformed);
         jMenuItemCategoria.add(jMenuItemCategoriaAdd);
 
         jMenuItemCategoriaAlterar.setText("Alterar");
+        jMenuItemCategoriaAlterar.addActionListener(this::jMenuItemCategoriaAlterarActionPerformed);
         jMenuItemCategoria.add(jMenuItemCategoriaAlterar);
 
         jMenuOpcoes.add(jMenuItemCategoria);
@@ -63,6 +68,7 @@ public class FrmMain extends javax.swing.JFrame {
         jMenuItemProduto.add(jMenuItemProdutoAdd);
 
         jMenuItemProdutoAlterar.setText("Alterar");
+        jMenuItemProdutoAlterar.addActionListener(this::jMenuItemProdutoAlterarActionPerformed);
         jMenuItemProduto.add(jMenuItemProdutoAlterar);
 
         jMenuOpcoes.add(jMenuItemProduto);
@@ -75,11 +81,11 @@ public class FrmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGap(0, 690, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
 
         pack();
@@ -91,6 +97,24 @@ public class FrmMain extends javax.swing.JFrame {
         FrmAddProduto object = new FrmAddProduto();
         object.setVisible(true);
     }//GEN-LAST:event_jMenuItemProdutoAddActionPerformed
+
+    private void jMenuItemProdutoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProdutoAlterarActionPerformed
+        // TODO add your handling code here:
+        FrmAltProduto object = new FrmAltProduto();
+        object.setVisible(true);
+    }//GEN-LAST:event_jMenuItemProdutoAlterarActionPerformed
+
+    private void jMenuItemCategoriaAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaAddActionPerformed
+        // TODO add your handling code here:
+        FrmAddCategoria object = new FrmAddCategoria();
+        object.setVisible (true);
+    }//GEN-LAST:event_jMenuItemCategoriaAddActionPerformed
+
+    private void jMenuItemCategoriaAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaAlterarActionPerformed
+        // TODO add your handling code here:
+        FrmAltCategoria object = new FrmAltCategoria();
+        object.setVisible (true);
+    }//GEN-LAST:event_jMenuItemCategoriaAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,6 +143,7 @@ public class FrmMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jMenuItemCategoria;
     private javax.swing.JMenuItem jMenuItemCategoriaAdd;
     private javax.swing.JMenuItem jMenuItemCategoriaAlterar;
